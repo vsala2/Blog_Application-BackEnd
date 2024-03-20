@@ -8,27 +8,24 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.NoArgsConstructor; 
 import lombok.Setter;
 
 @Entity
-@Table(name="users")
-@NoArgsConstructor
+@Table(name = "category")
 @Getter
 @Setter
-public class User {
+@NoArgsConstructor
+public class Category {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int userId;
+	private int categoryId;
 	
-	@Column(nullable = false, length = 100)
-	private String userName;
-	@Column(nullable = false, length = 100)
-	private String userEmail;
-	@Column(nullable = false, length = 100)
-	private String userPassword;
-	private String about;
+	@Column(nullable = false, length= 50)
+	private String categoryTitle;
 	
-	
+	@Column(nullable = false)
+	private String categoryDescription;
+
 }

@@ -3,6 +3,8 @@ package com.vaishnavi.blog.controllers;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vaishnavi.blog.payloads.ApiResponse;
 import com.vaishnavi.blog.payloads.UserDto;
 import com.vaishnavi.blog.services.UserService;
 
@@ -27,14 +30,14 @@ public class UserController {
 	
 	//Post- create user
 	@PostMapping("/")
-	public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){
 		UserDto createUserDto = this.userService.createUser(userDto);
 		return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
 	}
 	
 	//Put- Update User
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,@PathVariable Integer userId){
+	public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto,@PathVariable Integer userId){
 		UserDto updateUserDto = this.userService.updateUser(userDto, userId);
 		return new ResponseEntity<UserDto>(updateUserDto, HttpStatus.OK);
 	}
@@ -42,9 +45,9 @@ public class UserController {
 	
 	//Delete- Delete user
 	@DeleteMapping("/{userId}")
-	public ResponseEntity<?> deleteUser(@PathVariable Integer userId){
+	public ResponseEntity<ApiResponse> deleteUser(@PathVariable Integer userId){
 		this.userService.deleteUser(userId);
-		return new ResponseEntity<>(Map.of("Message", "User Deleted Successfully"), HttpStatus.OK); 
+		return new ResponseEntity<ApiResponse>(new ApiResponse("User deleted successfully", true), HttpStatus.OK); 
 		
 	}
 	//get- get User
