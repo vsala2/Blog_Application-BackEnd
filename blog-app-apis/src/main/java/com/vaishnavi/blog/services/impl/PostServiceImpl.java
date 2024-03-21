@@ -2,6 +2,8 @@ package com.vaishnavi.blog.services.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,38 +55,57 @@ public class PostServiceImpl implements PostService {
 		
 		Post post = this.postRepo.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post", "post id", postId));
 		post.setPostTitle(postDto.getPostTitle());
-		
-		return null;
+		post.setPostContent(postDto.getPostContent());
+		post.setImageName(postDto.getImageName());
+		Post updatedPost = this.postRepo.save(post);
+		return this.postToDto(updatedPost);
 	}
 
 	@Override
 	public void deletePost(Integer postId) {
-		// TODO Auto-generated method stub
-
+		Post post = this.postRepo.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post", "post id", postId));
+		this.postRepo.delete(post);
 	}
 
 	@Override
 	public List<PostDto> getAllPosts() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Post> allPosts = this.postRepo.findAll();
+		List<PostDto> allPostDtos = allPosts.stream().map(post-> this.postToDto(post)).collect(Collectors.toList());
+		return allPostDtos;
 	}
 
 	@Override
 	public PostDto getPostById(Integer postId) {
-		// TODO Auto-generated method stub
-		return null;
+		Post post = this.postRepo.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
+		
+		return this.postToDto(post);
 	}
 
 	@Override
 	public List<PostDto> getPostByCategory(Integer categoryId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		//get the category using the categoryId passed
+		Category category = this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "category id", categoryId));
+		
+		//using the category we will get a list of post with the category
+		List<Post> posts = this.postRepo.findByCategory(category);
+		
+		//however we want to return postDto 
+		List<PostDto> postDtos = posts.stream().map(post -> this.postToDto(post)).collect(Collectors.toList());
+		return postDtos;
 	}
 
 	@Override
 	public List<PostDto> getPostByUser(Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		//get the user of the userId
+		User user = this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "user id", userId));
+		
+		//using the user we will get a list of post with the user removed above
+		List<Post> posts = this.postRepo.findByUser(user);
+		
+		List<PostDto> postDtos = posts.stream().map(post-> this.postToDto(post)).collect(Collectors.toList());
+		return postDtos;
 	}
 
 	@Override
