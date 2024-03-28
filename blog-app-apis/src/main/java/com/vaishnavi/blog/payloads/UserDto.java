@@ -1,4 +1,4 @@
-package com.vaishnavi.blog.payloads;
+ package com.vaishnavi.blog.payloads;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
