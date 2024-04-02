@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vaishnavi.blog.entities.JwtRequest;
 import com.vaishnavi.blog.entities.JwtResponse;
+import com.vaishnavi.blog.payloads.UserDto;
 import com.vaishnavi.blog.security.JwtHelper;
+import com.vaishnavi.blog.services.UserService;
 
 @RestController
 @RequestMapping("api/v1/auth")
@@ -30,6 +32,8 @@ public class AuthController {
     @Autowired
     private AuthenticationManager manager;
 
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private JwtHelper helper;
@@ -68,6 +72,12 @@ public class AuthController {
     @ExceptionHandler(BadCredentialsException.class)
     public String exceptionHandler() {
         return "Credentials Invalid !!";
+    }
+    
+    @PostMapping("/register")
+    public ResponseEntity<UserDto> register(@RequestBody UserDto userDto){
+    	UserDto registerUser = this.userService.registerUser(userDto);
+    	return new ResponseEntity<UserDto>(registerUser, HttpStatus.CREATED);
     }
 
 }

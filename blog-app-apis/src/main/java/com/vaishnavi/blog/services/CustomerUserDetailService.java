@@ -1,16 +1,17 @@
-package com.vaishnavi.blog.security;
+package com.vaishnavi.blog.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.vaishnavi.blog.entities.User;
 import com.vaishnavi.blog.exceptions.ResourceNotFoundException;
 import com.vaishnavi.blog.repositories.UserRepo;
 
 //This class is authenticating the username from the DB
-
+@Service
 public class CustomerUserDetailService implements UserDetailsService{
 	
 	@Autowired

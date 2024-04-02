@@ -1,12 +1,28 @@
 package com.vaishnavi.blog;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.vaishnavi.blog.config.AppConstants;
+import com.vaishnavi.blog.entities.Role;
+import com.vaishnavi.blog.repositories.RoleRepo;
 
 @SpringBootApplication
-public class BlogAppApisApplication {
+public class BlogAppApisApplication implements CommandLineRunner{
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	//if there are no role in the role table
+	@Autowired
+	private RoleRepo roleRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BlogAppApisApplication.class, args);
@@ -17,4 +33,31 @@ public class BlogAppApisApplication {
 		return new ModelMapper();
 	}
 
+	@Override
+	public void run(String... args) throws Exception {
+		System.out.println(this.passwordEncoder.encode("user1"));
+		
+		try {
+			Role role = new Role();
+			role.setRoleId(AppConstants.ADMIN_USER);
+			role.setName("ROLE_ADMIN");
+			
+			Role role1 = new Role();
+			role1.setRoleId(AppConstants.NORMAL_USER);
+			role1.setName("ROLE_NORMAL");
+			
+			List<Role> roles = List.of(role, role1);
+			
+			List<Role> saveAllRoles = this.roleRepo.saveAll(roles);
+			saveAllRoles.forEach(r->{
+				System.out.println(r.getName());
+			});
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	
 }
