@@ -25,7 +25,6 @@ This project serves as the backend for a blogging application, built using layer
 
 - **Spring Security:** Enhanced security for API endpoints, incorporating techniques such as encryption, token management, and secure HTTP headers to protect against common vulnerabilities.
 
-
 ## Prerequisites
 Before you proceed, make sure you have the following installed:
 - Java 17
@@ -69,8 +68,6 @@ The application is accessible via the following domain:
 
 [Access Application](http://bloggingappication-env.eba-vxf6mqw4.us-east-2.elasticbeanstalk.com/swagger-ui/index.html).
 
-Please replace `http://your-domain.com` with the actual domain linked to your deployed application.
-
 ### Deployment Guide
 
 To deploy this application using AWS services, follow the steps below:
@@ -101,9 +98,6 @@ We welcome contributions. To contribute:
 3. Create a new branch for your changes.
 4. Make changes, commit, and push them to your branch.
 5. Submit a pull request to the main repository.
-
-## License
-[Specify License] - This project is released under [License Name]. Please see the LICENSE file for more details.
 
 ## Contact
 For support, feedback, or more information, contact us at [vaishnavisalaskar0@gmail.com].
