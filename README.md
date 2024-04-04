@@ -35,22 +35,22 @@ Before you proceed, make sure you have the following installed:
 
 ## Setup and Installation
 1. **Clone the Repository**
-
+```
 git clone <repository-url>
-
+```
 2. **Configure MySQL**
 Configure your MySQL database as per the `application.properties` file in the project.
 
 3. **Build the Project**
 Navigate to the project directory and build the project with Maven:
-
+```
 mvn clean install
-
+```
 4. **Run the Application**
 Start the application with Maven:
-
+```
 mvn spring-boot:run
-
+```
 Or, run the application directly within STS or your IDE of choice.
 
 ## Usage
